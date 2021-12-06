@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import PostContainer from './PostContainer';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <PostContainer />
   </React.StrictMode>,
   document.getElementById('root')
 );
