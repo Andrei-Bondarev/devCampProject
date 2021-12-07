@@ -1,4 +1,4 @@
-import post from './post.jpg';
+import post from '../../post.jpg';
 
 function Post(props) {
    return (
