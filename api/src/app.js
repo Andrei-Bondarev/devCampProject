@@ -1,15 +1,9 @@
 require('dotenv').config();
-
 const express = require('express');
-
 const config = require('../config');
-
 const routerUser = require('./routes/users_routes');
-
 const routerPost = require('./routes/posts_routes');
-
 const routerComment = require('./routes/comments_routes');
-
 const routerLike = require('./routes/likes_routes');
 
 const app = express();
