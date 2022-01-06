@@ -5,13 +5,17 @@
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "cd .. && husky install api/.husky"
+    "prepare": "cd .. && husky install api/.husky",
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^10.0.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "knex": "^0.95.15",
+    "pg": "^8.7.1"
   },
   "devDependencies": {
     "eslint": "^8.4.1",
@@ -20,6 +24,7 @@
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.4",
+    "nodemon": "^2.0.15",
     "prettier": "^2.5.1"
   }
 }
