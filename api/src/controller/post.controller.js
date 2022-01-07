@@ -30,7 +30,8 @@ class PostController {
   }
 
   async updatePost(req, res) {
-    const { PostID, Title, Text } = req.body;
+    const PostID = req.params;
+    const { Title, Text } = req.body;
     const updatedPost = await db('Posts')
       .where('PostID', PostID)
       .update({ Title, Text })

@@ -42,8 +42,8 @@ class UserController {
 
   async deleteUser(req, res) {
     /* console.log(req.params.id);
-                                        const { id } = req.params.id;
-                                        console.log(id); */
+                                            const { id } = req.params.id;
+                                            console.log(id); */
     const user = await db('Users')
       .where('UserID', req.params.id)
       .delete()
@@ -52,8 +52,8 @@ class UserController {
   }
 
   async updateUser(req, res) {
+    const UserID = req.params;
     const {
-      UserID,
       Surname,
       FirstName,
       Phone,

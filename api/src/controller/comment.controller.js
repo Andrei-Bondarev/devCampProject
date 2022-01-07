@@ -19,7 +19,8 @@ class CommentController {
   }
 
   async updateComment(req, res) {
-    const { CommentID, Text } = req.body;
+    const CommentID = req.params;
+    const { Text } = req.body;
     const updatedComment = await db('Comments')
       .where('CommentID', CommentID)
       .update({ Text })
