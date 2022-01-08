@@ -1,0 +1,32 @@
+.wrapper {
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: 60px 1fr;
+    grid-template-columns: 1fr;
+    background-color: cornflowerblue;
+}
+
+.Header {
+    height: 60px;
+    background-color: cornflowerblue;
+    display: flex;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: cornflowerblue;
+
+}
+
+.Header-button {
+    margin-left: 20px;
+    margin-top: 15px;
+}
+
+.Main {
+
+}
+
+body {
+
+    background-color: #a2bdec;
+}

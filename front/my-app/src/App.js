@@ -1,15 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
-import PostContainer from './containers/post/PostContainer';
+import HeaderContainer from "./containers/header/HeaderContainer";
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <PostContainer/>
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <HeaderContainer/>
+        </div>
+    );
 }
 
 export default App;

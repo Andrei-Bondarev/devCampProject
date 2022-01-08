@@ -1,0 +1,23 @@
+.Profile {
+    background-color: #a2bdec;
+    padding-left: 60px;
+    margin-top: 60px;
+}
+
+.Profile-container {
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.Profile-avatar {
+    margin-left: 50px;
+    width: 400px;
+    height: 400px;
+}
+
+.Profile-data {
+    font-size: 24px;
+}
+
