@@ -1,6 +1,9 @@
 import './Header.css'
 import {useState} from "react";
 import BodyContainer from '../body/BodyContainer';
+import PropTypes from 'prop-types';
+import FilePropsType from "../../FilePropsType";
+import UserPropTypes from "../../UserPropTypes";
 
 const Components = {
     Posts: 'Posts',
@@ -13,6 +16,7 @@ function HeaderContainer(props) {
     const HeaderButtonHandler = () => (Component) => {
         setContent(Component);
     }
+    console.log(props.user);
     return (
         <div className='wrapper'>
             <header className='Header'>
@@ -39,4 +43,8 @@ function HeaderContainer(props) {
     );
 }
 
+HeaderContainer.propTypes = {
+    startpage: PropTypes.string.isRequired,
+    user: PropTypes.shape(UserPropTypes)
+}
 export default HeaderContainer;
