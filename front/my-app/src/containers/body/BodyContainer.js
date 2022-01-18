@@ -5,6 +5,7 @@ import './Posts.css'
 import './Profile.css'
 import './AddPost.css'
 import PostValidate from "../post/PostValidate";
+import PropTypes from 'prop-types';
 
 function BodyContainer(props) {
     if (props.toRender === 'Posts')
@@ -15,6 +16,10 @@ function BodyContainer(props) {
         return (<Profile/>)
     if (props.toRender === 'Post')
         return (<PostValidate/>);
+}
+
+BodyContainer.propTypes = {
+    toRender: PropTypes.string.isRequired
 }
 
 export default BodyContainer;
