@@ -1,11 +1,22 @@
 import './App.css';
-import HeaderContainer from "./containers/header/HeaderContainer";
+import './containers/header/Header.css'
 import {
     BrowserRouter,
     Routes,
-    Route
+    Route,
+    Link
 } from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary";
+import {QueryClient, QueryClientProvider} from "react-query";
+import PostContainer from "./containers/post/PostContainer";
+import UsersContainer from './containers/users/UsersContainer'
+import UserContainer from "./containers/user/UserContainer";
+import Profile from "./components/body/ProfileComponent";
+import Posts from "./components/body/PostsComponent";
+import AddPost from "./components/body/AddPostComponent";
+import Post from "./components/post/PostComponent";
+
+const queryClient = new QueryClient();
 
 function App() {
     const User = {
@@ -73,17 +84,38 @@ function App() {
         }]
     }
     return (
-        <BrowserRouter>
-            <ErrorBoundary>
-                <Routes>
-                    <Route path="/" element={<HeaderContainer startpage='Profile' user={User}/>}/>
-                    <Route path="/Profile" element={<HeaderContainer startpage='Profile' user={User}/>}/>
-                    <Route path="/Posts" element={<HeaderContainer startpage='Posts' user={User}/>}/>
-                    <Route path="/Posts/new" element={<HeaderContainer startpage='AddPost' user={User}/>}/>
-                    <Route path="/Posts/:id" element={<HeaderContainer startpage='Post' user={User}/>}/>
-                </Routes>
-            </ErrorBoundary>
-        </BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+            <BrowserRouter>
+                <ErrorBoundary>
+                    <nav className='Header'>
+                        <ul>
+                            <li>
+                                <Link to='Posts'>Posts</Link>
+                            </li>
+                            <li>
+                                <Link to='Posts/new'>Add Post</Link>
+                            </li>
+                            <li>
+                                <Link to='Profile'>Profile</Link>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div className='Main'>
+                        <Routes>
+                            <Route path="/"
+                                   element={<Profile Surname='test' FirstName='test' Email='test@ga' Phone='555'/>}/>
+                            <Route path="/Profile"
+                                   element={<Profile Surname='test' FirstName='test' Email='test@ga' Phone='555'/>}/>
+                            <Route path="/Posts" element={<PostContainer/>}/>
+                            <Route path="/Posts/new" element={<AddPost/>}/>
+                            <Route path="/Posts/:id" element={<Post/>}/>
+                            <Route path="/users" element={<UsersContainer/>}/>
+                            <Route path="/users/:id" element={<UserContainer/>}/>
+                        </Routes>
+                    </div>
+                </ErrorBoundary>
+            </BrowserRouter>
+        </QueryClientProvider>
     );
 }
 

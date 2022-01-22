@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 function Post(props) {
     return (
         <div className='Post'>
-            <h1>{props.author}</h1>
+            <h1>{props.Title}</h1>
             <img src={post} className='Post-photo' alt='Me)'/>
             <p>
-                This is my first post and this is me on the photo)
+                Post # {props.PostID}
             </p>
         </div>
     );
@@ -15,6 +15,7 @@ function Post(props) {
 
 // eslint-disable-next-line react/no-typos
 Post.propTypes = {
-    author: PropTypes.string.isRequired
+    Title: PropTypes.string.isRequired,
+    PostID: PropTypes.number.isRequired
 }
 export default Post;

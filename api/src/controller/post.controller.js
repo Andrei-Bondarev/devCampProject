@@ -14,6 +14,11 @@ class PostController {
     res.json(newPost);
   }
 
+  async getAllPost(req, res) {
+    const posts = await db('Posts').returning('*');
+    res.json(posts);
+  }
+
   async getPostByUser(req, res) {
     const { id } = req.query;
     const posts = await db('Posts').where('UserID', id).returning('*');
