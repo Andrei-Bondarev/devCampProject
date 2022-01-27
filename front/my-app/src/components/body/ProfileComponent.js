@@ -11,7 +11,6 @@ function Profile(props) {
                     <div className='userEmail'>{props.Email}</div>
                 </div>
                 <img className='Profile-avatar' src={avatar} alt="ME"/>
-
             </div>
         </div>
     );
