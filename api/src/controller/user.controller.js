@@ -42,8 +42,8 @@ class UserController {
 
   async deleteUser(req, res) {
     /* console.log(req.params.id);
-                                            const { id } = req.params.id;
-                                            console.log(id); */
+                                                                                            const { id } = req.params.id;
+                                                                                            console.log(id); */
     const user = await db('Users')
       .where('UserID', req.params.id)
       .delete()
@@ -52,17 +52,31 @@ class UserController {
   }
 
   async updateUser(req, res) {
-    const UserID = req.params;
+    const UserID = req.params.id;
     const {
       Surname,
       FirstName,
       Phone,
       Email,
-      NameStatusid,
-      PhoneStatusid,
-      EmailStatusid,
-      EducatonStatusid,
+      NameStatus,
+      PhoneStatus,
+      EmailStatus,
+      UniversityStatus,
     } = req.body;
+    let NameStatusid;
+    let PhoneStatusid;
+    let EmailStatusid;
+    let EducatonStatusid;
+    // eslint-disable-next-line no-unused-expressions
+    NameStatus === 'All' ? (NameStatusid = 1) : (NameStatusid = 2);
+    // eslint-disable-next-line no-unused-expressions
+    PhoneStatus === 'All' ? (PhoneStatusid = 1) : (PhoneStatusid = 2);
+    // eslint-disable-next-line no-unused-expressions
+    EmailStatus === 'All' ? (EmailStatusid = 1) : (EmailStatusid = 2);
+    // eslint-disable-next-line no-unused-expressions
+    UniversityStatus === 'All'
+      ? (EducatonStatusid = 1)
+      : (EducatonStatusid = 2);
     const user = await db('Users').where('UserID', UserID).update({
       Surname,
       FirstName,

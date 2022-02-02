@@ -6,10 +6,14 @@ import {useQuery} from "react-query";
 function PostContainer() {
     const {isFetching, refetch, data} = useQuery('posts', () => getPosts());
     const posts = data?.data || [];
+
+
     return (
         <div>
             {isFetching && <div>Loading...</div>}
-            {posts?.map(({PostID, Title}) => (<Post PostID={PostID} Title={Title} key={PostID}/>))}
+            {posts?.map(({PostID, UserID, Title, Text, Post_date, PostStatusID}) => (
+                <Post PostID={PostID} Title={Title} key={PostID} Text={Text} postDate={Post_date} userId={UserID}
+                      postAvailableTo={PostStatusID}/>))}
         </div>
 
     );

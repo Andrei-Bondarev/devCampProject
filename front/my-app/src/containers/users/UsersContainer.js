@@ -9,7 +9,7 @@ function UsersContainer() {
         <div>
             {isFetching && <div>Loading...</div>}
             {users?.map(({UserID, Surname, FirstName, Phone, Email}) => (
-                <User UserID={UserID} Surname={Surname} FirstName={FirstName} Phone={Phone} Email={Email}
+                <User userID={UserID} surname={Surname} firstName={FirstName} phone={Phone} email={Email}
                       key={UserID}/>))}
         </div>
     )
