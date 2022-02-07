@@ -5,14 +5,13 @@ import './user.css'
 
 function User(props) {
     let navigate = useNavigate();
-    console.log(props)
     return (
-        <div className='User' onClick={() => navigate(`/users/${props.UserID}`)}>
+        <div className='User' onClick={() => navigate(`/users/${props.userID}`)}>
             <div className='User-flex'>
                 <div className='User-data'>
-                    <div className='User-data-name'> {props.Surname} {props.FirstName}</div>
-                    <div className='User-data-phone'>{props.Phone}</div>
-                    <div className='User-data-email'>{props.Email}</div>
+                    <div className='User-data-name'> {props.surname} {props.firstName}</div>
+                    <div className='User-data-phone'>{props.phone}</div>
+                    <div className='User-data-email'>{props.email}</div>
                 </div>
                 <img src={photo} alt="photo"/>
             </div>
@@ -21,11 +20,11 @@ function User(props) {
 }
 
 User.propTypes = {
-    Surname: PropTypes.string.isRequired,
-    FirstName: PropTypes.string.isRequired,
-    Phone: PropTypes.number.isRequired,
-    Email: PropTypes.string.isRequired,
-    UserID: PropTypes.number.isRequired
+    surname: PropTypes.string.isRequired,
+    firstName: PropTypes.string.isRequired,
+    phone: PropTypes.number.isRequired,
+    email: PropTypes.string.isRequired,
+    userID: PropTypes.number.isRequired
 }
 
 export default User
