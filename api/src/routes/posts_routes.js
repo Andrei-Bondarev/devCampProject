@@ -1,10 +1,11 @@
 const router = require('express').Router();
+const asyncHandler = require('../middlewares/asyncHandler');
 
 const postController = require('../controller/post.controller');
 
-router.post('/posts', postController.createPost);
-router.get('/posts', postController.getAllPost);
-router.delete('/posts/:id', postController.deletePost);
-router.put('/posts', postController.updatePost);
-router.get('/posts/:id', postController.getPost);
+router.post('/posts', asyncHandler(postController.createPost));
+router.get('/posts', asyncHandler(postController.getAllPost));
+router.delete('/posts/:id', asyncHandler(postController.deletePost));
+router.put('/posts', asyncHandler(postController.updatePost));
+router.get('/posts/:id', asyncHandler(postController.getPost));
 module.exports = router;
