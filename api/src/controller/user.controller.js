@@ -11,6 +11,7 @@ class UserController {
       PhoneStatusid,
       EmailStatusid,
       EducatonStatusid,
+      EducationID,
     } = req.body;
     const dbResult = await db('Users')
       .insert({
@@ -22,6 +23,7 @@ class UserController {
         PhoneStatusid,
         EmailStatusid,
         EducatonStatusid,
+        EducationID,
       })
       .returning('*');
     res.json(dbResult);
@@ -42,8 +44,8 @@ class UserController {
 
   async deleteUser(req, res) {
     /* console.log(req.params.id);
-                                                                                            const { id } = req.params.id;
-                                                                                            console.log(id); */
+                                                                                                    const { id } = req.params.id;
+                                                                                                    console.log(id); */
     const user = await db('Users')
       .where('UserID', req.params.id)
       .delete()
