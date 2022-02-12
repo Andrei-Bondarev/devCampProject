@@ -68,8 +68,7 @@ export default function PostModal(props) {
             values.PostID = props.postId;
             values.UserID = 1;
             values.PostStatusID = availableTo;
-            console.log(values)
-            //props.crudFunc(values);
+            props.crudFunc(values);
             handleClose();
         },
     });
