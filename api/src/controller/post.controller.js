@@ -45,7 +45,6 @@ class PostController {
   }
 
   async getPost(req, res) {
-    res.header('Access-Control-Allow-Origin', '*');
     const { id } = req.params;
     const post = await db('Posts').where('PostID', id).returning('*');
     res.json(post);
