@@ -105,7 +105,8 @@ const HeaderAppBar = () => {
                                     {pages[0]}
                                 </Button>
                             </Link>
-                            <PostModal buttonName='Add post' modalType='Add' buttonColor='white' crudFunc={postPost}/>
+                            <PostModal buttonName='Add post' modalType='Add' buttonColor='white' crudFunc={postPost}
+                                       postAvailableTo={1}/>
                         </Box>
                         <Box sx={{flexGrow: 0}}>
                             <Tooltip title="Open settings">

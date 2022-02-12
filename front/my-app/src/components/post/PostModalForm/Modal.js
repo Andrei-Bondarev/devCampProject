@@ -9,6 +9,12 @@ import * as yup from "yup";
 import {useFormik} from "formik";
 import ModalActivator from "./ModalActivator";
 import PropTypes from "prop-types";
+import FormAutocomplete from "./FormAutocomplete";
+import {useCallback, useState} from "react";
+import {postAvatar} from "../../../containers/users/api/crud";
+import FormImage from "./FormImage";
+import {postPhoto} from "../../../containers/post/api/crud";
+
 
 const validationSchema = yup.object({
     Title: yup.string('Enter title').required('Title is required'),
@@ -29,6 +35,23 @@ const style = {
 
 export default function PostModal(props) {
 
+    //PHOTO
+    const [img, setImg] = useState(null);
+    const [photo, setPhoto] = useState(null);
+
+    const sendFile = useCallback(async () => {
+        try {
+            const data = new FormData();
+            data.append('photo', img);
+            await postPhoto(data, props.userId)
+                .then(res => setPhoto(res.data.path))
+        } catch (e) {
+
+        }
+    }, [img, props.userId])
+    const photoUrl = `http://localhost:3200/app/posts/${props.userId}/photo.jpg`
+    //PHOTO
+
     const [availableTo, setAvailableTo] = React.useState(props.postAvailableTo);
 
     const handleChangeSelect = (event) => {
@@ -41,10 +64,12 @@ export default function PostModal(props) {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
+            values.Post_date = new Date(Date.now());
             values.PostID = props.postId;
             values.UserID = 1;
-            values.PostStatus = availableTo;
-            props.crudFunc(values);
+            values.PostStatusID = availableTo;
+            console.log(values)
+            //props.crudFunc(values);
             handleClose();
         },
     });
@@ -78,6 +103,8 @@ export default function PostModal(props) {
                             helperText={formik.touched.Title && formik.errors.Title}
                             defaultValue={formik.values.Title}
                         />
+                        <FormImage avatar={photo} avatarUrl={photoUrl} handleChange={e => setImg(e.target.files[0])}
+                                   sendFile={sendFile}/>
                         <TextField
                             fullWidth
                             id="Text"
@@ -91,6 +118,7 @@ export default function PostModal(props) {
                             helperText={formik.touched.Text && formik.errors.Text}
                             defaultValue={formik.values.Text}
                         />
+
                         <AvailableToSelect changeHandler={handleChangeSelect} value={availableTo}/>
                         <Box sx={{
                             display: 'flex',

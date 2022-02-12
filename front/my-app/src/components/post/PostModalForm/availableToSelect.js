@@ -19,9 +19,10 @@ export default function AvailableToSelect(props) {
                     label="group"
                     onChange={props.changeHandler}
                     sx={{textAlign: 'center'}}
+                    defaultValue={1}
                 >
-                    <MenuItem value={'All'}>All</MenuItem>
-                    <MenuItem value={'Friends'}>Friends</MenuItem>
+                    <MenuItem value={1}>All</MenuItem>
+                    <MenuItem value={2}>Friends</MenuItem>
                 </Select>
             </FormControl>
         </Box>
