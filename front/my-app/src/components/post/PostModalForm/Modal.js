@@ -35,6 +35,7 @@ const style = {
 
 export default function PostModal(props) {
 
+
     //PHOTO
     const [img, setImg] = useState(null);
     const [photo, setPhoto] = useState(null);

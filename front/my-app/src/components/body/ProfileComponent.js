@@ -21,6 +21,8 @@ import FormAutocomplete from "../post/PostModalForm/FormAutocomplete";
 import axios from "axios";
 import {apiClient} from "../../config/axios";
 import FormImage from "../post/PostModalForm/FormImage";
+import authContext from "../../authContext";
+import {useContext} from 'react';
 
 const validationSchema = yup.object({
     FirstName: yup.string('Enter first name').required('First name is required'),
@@ -40,7 +42,7 @@ const options = [
 ]
 
 function Profile(props) {
-
+    const {authenticated, user, setUserData} = useContext(authContext);
     //AVATAR
     const [img, setImg] = useState(null);
     const [avatar, setAvatar] = useState(null);

@@ -14,6 +14,8 @@ import Profile from "./components/body/ProfileComponent";
 import AddPost from "./components/body/AddPostComponent";
 import Post from "./components/post/PostComponent";
 import HeaderContainer from "./containers/header/HeaderAppBar";
+import authContext from "./authContext";
+import {useState} from "react";
 
 const queryClient = new QueryClient();
 
@@ -82,24 +84,33 @@ function App() {
             }
         }]
     }
+
+    const [userData, setUserData] = useState({
+        authenticated: false, user: null, setUserData: () => {
+        }
+    });
     return (
         <QueryClientProvider client={queryClient}>
             <BrowserRouter>
                 <ErrorBoundary>
                     <HeaderContainer/>
-                    <div className='Main'>
-                        <Routes>
-                            <Route path="/"
-                                   element={<Profile Surname='test' FirstName='test' Email='test@ga' Phone='555'/>}/>
-                            <Route path="/profile"
-                                   element={<Profile Surname='test' FirstName='test' Email='test@ga' Phone='555'/>}/>
-                            <Route path="/posts" element={<PostContainer/>}/>
-                            <Route path="/newPosts" element={<AddPost/>}/>
-                            <Route path="/posts/:id" element={<Post/>}/>
-                            <Route path="/users" element={<UsersContainer/>}/>
-                            <Route path="/users/:id" element={<UserContainer/>}/>
-                        </Routes>
-                    </div>
+                    <authContext.Provider value={userData}>
+                        <div className='Main'>
+                            <Routes>
+                                <Route path="/"
+                                       element={<Profile Surname='test' FirstName='test' Email='test@ga'
+                                                         Phone='555'/>}/>
+                                <Route path="/profile"
+                                       element={<Profile Surname='test' FirstName='test' Email='test@ga'
+                                                         Phone='555'/>}/>
+                                <Route path="/posts" element={<PostContainer/>}/>
+                                <Route path="/newPosts" element={<AddPost/>}/>
+                                <Route path="/posts/:id" element={<Post/>}/>
+                                <Route path="/users" element={<UsersContainer/>}/>
+                                <Route path="/users/:id" element={<UserContainer/>}/>
+                            </Routes>
+                        </div>
+                    </authContext.Provider>
                 </ErrorBoundary>
             </BrowserRouter>
         </QueryClientProvider>
