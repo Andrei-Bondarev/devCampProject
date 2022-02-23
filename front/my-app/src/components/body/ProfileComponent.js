@@ -13,6 +13,14 @@ import PropTypes from 'prop-types';
 import * as yup from "yup";
 import Avatar from "@mui/material/Avatar";
 import styled from "@emotion/styled";
+import Cropper from 'react-cropper';
+import 'cropperjs/dist/cropper.css';
+import {useCallback, useState} from "react";
+import {postAvatar} from "../../containers/users/api/crud";
+import FormAutocomplete from "../post/PostModalForm/FormAutocomplete";
+import axios from "axios";
+import {apiClient} from "../../config/axios";
+import FormImage from "../post/PostModalForm/FormImage";
 
 const validationSchema = yup.object({
     FirstName: yup.string('Enter first name').required('First name is required'),
@@ -25,13 +33,34 @@ const validationSchema = yup.object({
         )
 });
 
+const options = [
+    {value: 1, label: 'None'},
+    {value: 2, label: 'SumDU'},
+    {value: 3, label: 'KPI'},
+]
+
 function Profile(props) {
 
-    const Input = styled('input')({
-        display: 'none',
-    });
+    //AVATAR
+    const [img, setImg] = useState(null);
+    const [avatar, setAvatar] = useState(null);
 
-    const avatarUrl = `http://localhost:3200/app/${props.userId}/avatar.jpg`
+    const sendFile = useCallback(async () => {
+        try {
+            const data = new FormData();
+            data.append('avatar', img);
+            await postAvatar(data, props.userId)
+                .then(res => setAvatar(res.data.path))
+        } catch (e) {
+
+        }
+    }, [img, props.userId])
+    const avatarUrl = `http://localhost:3200/app/users/${props.userId}/avatar.jpg`
+    //AVATAR
+
+    const [value, setValue] = React.useState(options[0]);
+    const [inputValue, setInputValue] = React.useState('');
+
 
     function stringById(id) {
         return id === 1 ? 'All' : 'Friends';
@@ -61,6 +90,16 @@ function Profile(props) {
         setUniversityAvailableTo(event.target.value);
     };
 
+
+    const submitHandler = (values) => {
+        values.NameStatusid = nameAvailableTo;
+        values.PhoneStatusid = phoneAvailableTo;
+        values.EmailStatusid = emailAvailableTo;
+        values.EducatonStatusid = universityAvailableTo;
+        values.EducationID = value.value;
+        updateUser(props.userId, values);
+    }
+
     const formik = useFormik({
         initialValues: {
             FirstName: props.firstName,
@@ -71,16 +110,12 @@ function Profile(props) {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            values.NameStatus = nameAvailableTo;
-            values.PhoneStatus = phoneAvailableTo;
-            values.EmailStatus = emailAvailableTo;
-            values.UniversityStatus = universityAvailableTo;
-            updateUser(props.userId, values);
+            submitHandler(values);
         },
     });
 
     return (
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit} encType='multipart/form-data'>
             <Card sx={{
                 minWidth: 275,
                 maxWidth: 1400,
@@ -93,7 +128,7 @@ function Profile(props) {
                     <Box sx={{
                         display: 'flex',
                     }}>
-                        <Box sx={{maxWidth: '1000px'}}>
+                        <Box sx={{maxWidth: '800px'}}>
                             <Typography component="div">
                                 <Box sx={{fontSize: 'h6.fontSize', m: 1}}>My profile</Box>
                             </Typography>
@@ -186,48 +221,39 @@ function Profile(props) {
                                     display: 'flex',
                                 }}>
 
-                                    <UniversitySelect/>
+                                    <FormAutocomplete name='autocomplete' id='autocomplete' options={options}
+                                                      value={value}
+                                                      setValue={setValue} inputValue={inputValue}
+                                                      setInputValue={setInputValue}/>
                                     <AvailableToSelect changeHandler={handleChangeSelectUniversity}
                                                        value={universityAvailableTo}/>
                                 </Box>
-                                <Button sx={{maxHeight: '50px', marginLeft: '900px'}} type='submit'>Save</Button>
+                                <Button sx={{maxHeight: '50px',}} type='submit'>Save</Button>
                             </Box>
                         </Box>
-                        <Box alignItems='center' display='flex' alignContent='center' flexDirection='column'>
-                            <Avatar
-                                alt="Remy Sharp"
-                                src={avatarUrl}
-                                sx={{width: 250, height: 250}}
-                            />
-                            <Box alignItems='center'>
-                                <label htmlFor="contained-button-file">
-                                    <Input accept="image/*" id="contained-button-file" multiple type="file"/>
-                                    <Button variant="contained" component="span">
-                                        Загрузить аватар
-                                    </Button>
-                                </label>
-                            </Box>
-
-                        </Box>
+                        <FormImage avatar={avatar} avatarUrl={avatarUrl} handleChange={e => setImg(e.target.files[0])}
+                                   sendFile={sendFile}/>
                     </Box>
                 </CardContent>
             </Card>
         </form>
 
-    );
+    )
+        ;
 
 }
 
-Profile.propTypes = {
-    firstName: PropTypes.string.isRequired,
-    surname: PropTypes.string.isRequired,
-    phone: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    nameStatusId: PropTypes.number.isRequired,
-    phoneStatusId: PropTypes.number.isRequired,
-    emailStatusId: PropTypes.number.isRequired,
-    educationStatusId: PropTypes.number.isRequired,
-    userId: PropTypes.number.isRequired
-}
+Profile.propTypes =
+    {
+        firstName: PropTypes.string.isRequired,
+        surname: PropTypes.string.isRequired,
+        phone: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+        nameStatusId: PropTypes.number.isRequired,
+        phoneStatusId: PropTypes.number.isRequired,
+        emailStatusId: PropTypes.number.isRequired,
+        educationStatusId: PropTypes.number.isRequired,
+        userId: PropTypes.number.isRequired
+    }
 
 export default Profile;

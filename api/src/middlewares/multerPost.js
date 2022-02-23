@@ -3,14 +3,14 @@ const fs = require('fs');
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    const dir = `src/uploads/users/${req.params.id}`;
+    const dir = `src/uploads/posts/${req.params.id}`;
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
     cb(null, `${dir}`);
   },
   filename(req, file, cb) {
-    cb(null, `avatar.jpg`);
+    cb(null, `post.jpg`);
   },
 });
 const fileFilter = (req, file, cb) => {

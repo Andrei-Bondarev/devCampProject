@@ -2,11 +2,7 @@ const db = require('../services/db');
 
 class PostController {
   async createPost(req, res) {
-    const { Title, Text, Post_date, UserID, PostStatus } = req.body;
-    let PostStatusID;
-    if (PostStatus === 'All') PostStatusID = 1;
-    else PostStatusID = 2;
-
+    const { Title, Text, UserID, Post_date, PostStatusID } = req.body;
     const newPost = await db('Posts')
       .insert({
         Title,
@@ -40,10 +36,7 @@ class PostController {
   }
 
   async updatePost(req, res) {
-    const { Title, Text, PostID, PostStatus } = req.body;
-    let PostStatusID;
-    if (PostStatus === 'All') PostStatusID = 1;
-    else PostStatusID = 2;
+    const { Title, Text, PostID, PostStatusID } = req.body;
     const updatedPost = await db('Posts')
       .where('PostID', PostID)
       .update({ Title, Text, PostStatusID })

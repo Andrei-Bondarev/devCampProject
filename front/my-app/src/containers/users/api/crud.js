@@ -14,6 +14,6 @@ export const updateUser = async (UserID, postData) => {
     return apiClient.put(`/users/` + UserID, postData)
 }
 
-export const postAvatar = async (avatar, UserID) => {
-    return apiClient.post(`/users/` + UserID, avatar);
+export const postAvatar = async (formData, UserID) => {
+    return apiClient.post(`/users/` + UserID, formData, {headers: {'content-type': 'multipart/form-data'},});
 }

@@ -12,7 +12,7 @@ import Box from "@mui/material/Box";
 function Post(props) {
     const date = new Date(props.postDate);
     let postStatus;
-    props.postAvailableTo === 1 ? postStatus = 'All' : postStatus = 'Friends';
+
     return (
         <Card className='Post'
               sx={{minWidth: 275, maxWidth: 1000, marginLeft: 'auto', marginRight: 'auto', marginBottom: '50px'}}>
@@ -21,9 +21,9 @@ function Post(props) {
                     display: 'flex',
                     justifyContent: 'space-between'
                 }}>
-                    <div>{date.getFullYear().toString() + "-" + ((date.getMonth() + 1).toString().length == 2 ? (date.getMonth() + 1).toString() : "0" + (date.getMonth() + 1).toString()) + "-" + (date.getDate().toString().length == 2 ? date.getDate().toString() : "0" + date.getDate().toString()) + " " + (date.getHours().toString().length == 2 ? date.getHours().toString() : "0" + date.getHours().toString()) + ":" + ((parseInt(date.getMinutes() / 5) * 5).toString().length == 2 ? (parseInt(date.getMinutes() / 5) * 5).toString() : "0" + (parseInt(date.getMinutes() / 5) * 5).toString()) + ":00"}</div>
+                    <div>{date.getFullYear().toString() + "-" + ((date.getMonth() + 1).toString().length == 2 ? (date.getMonth() + 1).toString() : "0" + (date.getMonth() + 1).toString()) + "-" + (date.getDate().toString().length == 2 ? date.getDate().toString() : "0" + date.getDate().toString()) + " " + (date.getHours().toString().length == 2 ? date.getHours().toString() : "0" + date.getHours().toString()) + ":" + (date.getMinutes().toString().length == 2 ? date.getMinutes().toString() : "0" + date.getMinutes().toString()) + ":00"}</div>
                     <More postId={props.PostID} title={props.Title} text={props.Text}
-                          postAvailableTo={postStatus}/>
+                          postAvailableTo={props.postAvailableTo}/>
                 </Box>
                 <Typography variant="h5" component="div" align='center'>
                     {props.Title}
