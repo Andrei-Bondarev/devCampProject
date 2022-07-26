@@ -1,3 +1,4 @@
+import React, {useEffect} from "react";
 import './App.css';
 import {
     BrowserRouter,
@@ -14,87 +15,29 @@ import Profile from "./components/body/ProfileComponent";
 import AddPost from "./components/body/AddPostComponent";
 import Post from "./components/post/PostComponent";
 import HeaderContainer from "./containers/header/HeaderAppBar";
-import authContext from "./authContext";
 import {useState} from "react";
+import LoginFormContainer from "./containers/login/LoginForm";
+import authContext from "./authContext";
 
 const queryClient = new QueryClient();
 
 function App() {
-    const User = {
-        name: 'Andriy',
-        age: 20,
-        avatar: {
-            file: {
-                id: 1,
-                name: 'My-photo',
-                path: './photos'
-            }
-        },
-        files: [{
-            id: 2,
-            name: 'Newphoto',
-            path: './photos'
-        }, {
-            id: 3,
-            name: 'Newphoto2',
-            path: './photos'
-        }],
-        addrr: {
-            main: {
-                line1: 'mainline1',
-                line2: 'mainline2',
-                zip: 333
-            },
-            alt: {
-                line1: 'altline1',
-                line2: 'altline2',
-                zip: 4444
-            }
-        },
-        friends: [{
-            name: 'Sasha',
-            age: 20,
-            avatar: {
-                file: {
-                    id: 5,
-                    name: 'Sasha-photo',
-                    path: './photos'
-                }
-            },
-            files: [{
-                id: 6,
-                name: 'Newphoto',
-                path: './photos'
-            }, {
-                id: 7,
-                name: 'Newphoto2',
-                path: './photos'
-            }],
-            addrr: {
-                main: {
-                    line1: 'mainline1',
-                    line2: 'mainline2',
-                    zip: 33
-                },
-                alt: {
-                    line1: 'altline1',
-                    line2: 'altline2',
-                    zip: 22
-                }
-            }
-        }]
-    }
-
     const [userData, setUserData] = useState({
-        authenticated: false, user: null, setUserData: () => {
-        }
+        authenticated: false, user: null
     });
+    useEffect(() => {
+        const authData = JSON.parse(localStorage.getItem('auth'));
+        if (authData) {
+            setUserData(authData);
+        }
+    }, []);
+    console.log(userData);
     return (
         <QueryClientProvider client={queryClient}>
             <BrowserRouter>
                 <ErrorBoundary>
-                    <HeaderContainer/>
-                    <authContext.Provider value={userData}>
+                    <authContext.Provider value={{userData, setUserData}}>
+                        <HeaderContainer/>
                         <div className='Main'>
                             <Routes>
                                 <Route path="/"
@@ -108,6 +51,7 @@ function App() {
                                 <Route path="/posts/:id" element={<Post/>}/>
                                 <Route path="/users" element={<UsersContainer/>}/>
                                 <Route path="/users/:id" element={<UserContainer/>}/>
+                                <Route path="/login" element={<LoginFormContainer/>}/>
                             </Routes>
                         </div>
                     </authContext.Provider>
