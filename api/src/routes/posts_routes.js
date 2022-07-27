@@ -4,11 +4,13 @@ const asyncHandler = require('../middlewares/asyncHandler');
 const postController = require('../controller/post.controller');
 const acl = require('../middlewares/acl');
 const db = require('../services/db');
+const authMiddleware = require('../middlewares/authMiddleware');
 
-router.post('/posts', asyncHandler(postController.createPost));
-router.get('/posts', asyncHandler(postController.getAllPost));
+router.post('/posts', authMiddleware, asyncHandler(postController.createPost));
+router.get('/posts', authMiddleware, asyncHandler(postController.getAllPost));
 router.delete(
   '/posts/:id',
+  authMiddleware,
   acl([
     {
       resource: 'post',
@@ -22,6 +24,7 @@ router.delete(
 );
 router.put(
   '/posts',
+  authMiddleware,
   acl([
     {
       resource: 'post',
@@ -33,5 +36,5 @@ router.put(
   ]),
   asyncHandler(postController.updatePost)
 );
-router.get('/posts/:id', asyncHandler(postController.getPost));
+router.get('/posts/:id', authMiddleware, asyncHandler(postController.getPost));
 module.exports = router;
