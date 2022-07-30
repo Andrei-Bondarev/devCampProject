@@ -1,6 +1,7 @@
 require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
+const passport = require('passport');
 const config = require('../config');
 const routerUser = require('./routes/users_routes');
 const routerPost = require('./routes/posts_routes');
@@ -9,11 +10,14 @@ const routerLike = require('./routes/likes_routes');
 const routerUpload = require('./routes/upload_routes');
 const logger = require('./middlewares/logger');
 const errorMiddleware = require('./middlewares/errorMiddleware');
+require('./googleTokenStrategy');
+require('./facebookTokenStrategy');
 
 const app = express({ extended: true });
 const port = config.appPort || 3200;
 app.use(express.json());
 app.use(cors());
+app.use(passport.initialize());
 app.use('/app', express.static(`${__dirname}/uploads`));
 app.use(logger('Logs'));
 app.use('/app', routerUser);
